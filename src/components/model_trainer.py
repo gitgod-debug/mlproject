@@ -123,7 +123,11 @@ class ModelTrainer:
             predicted=best_model.predict(X_test)
 
             r2_square = r2_score(y_test, predicted)
-            return r2_square
+            # Return both the model path and the R² score
+            return {
+                "model_path": self.model_trainer_config.trained_model_file_path,
+                "r2_score": r2_square
+            }
             
 
 

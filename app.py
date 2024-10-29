@@ -1,13 +1,17 @@
 from flask import Flask,request,render_template
 
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+from src.pipeline.train_pipeline import TrainPipeline
+import logging
 
 application=Flask(__name__)
 
 app=application  # Alias for easy reference to the app instance
 
 ## Route for a home page
-
+'''
+To access prediction route, use the following URL: http://127.0.0.1:5000/predictdata
+'''
 @app.route('/')  # Defines the route for the root URL
 def index():
     return render_template('index.html')  # Renders the main index page (HTML template)
@@ -47,6 +51,22 @@ def predict_datapoint():
         
         # Render the result on the home page
         return render_template('home.html',results=results[0])
+    
+# Route for initiating the model training 
+'''
+To access train route, use the following URL: http://127.0.0.1:5000/predictdata
+'''
+@app.route('/train', methods=['GET'])
+def train_model():
+    try:
+        # Initialize and run the training pipeline
+        train_pipeline = TrainPipeline()
+        train_pipeline.run_pipeline()
+        
+        return render_template('home.html', results="Model training completed successfully.")
+    except Exception as e:
+        logging.error(f"Training error: {e}", exc_info=True)  # Log the error with traceback
+        return render_template('home.html', results=f"Error occurred during training: {str(e)}")
     
 # Main driver function for running the Flask app
 if __name__=="__main__":

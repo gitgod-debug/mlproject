@@ -4,9 +4,7 @@ from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 from src.pipeline.train_pipeline import TrainPipeline
 import logging
 
-application=Flask(__name__)
-
-app=application  # Alias for easy reference to the app instance
+app=Flask(__name__)
 
 ## Route for a home page
 '''

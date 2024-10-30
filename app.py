@@ -1,8 +1,9 @@
+import os
+import logging
 from flask import Flask,request,render_template
 
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 from src.pipeline.train_pipeline import TrainPipeline
-import logging
 
 app=Flask(__name__)
 
@@ -68,4 +69,5 @@ def train_model():
     
 # Main driver function for running the Flask app
 if __name__=="__main__":
+    port = int(os.environ.get("PORT", 5000))  # Use the PORT environment variable
     app.run(host="0.0.0.0", debug=True)  # Run the app on the local server (listening on all public IPs) 
